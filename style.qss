@@ -18,7 +18,7 @@ QTabBar::tab {
 /* Style for the current tab in the tab widget */
 QTabBar::tab:selected {
     background-color: #fff;
-    border-bottom-color: #9ceb6c;
+    border-bottom-color: #fff;
 }
 
 /* Style for pages in the tab widget */
@@ -30,7 +30,6 @@ QTabWidget::pane {
 
 /* Style for labels */
 QLabel {
-    background-color: #9ceb6c;
     font-size: 18px;
     color: #333;
 }
