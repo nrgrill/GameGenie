@@ -1,2 +1,2 @@
 # GameGenie
-Yo download openpyxl Cuh
+pip install PySide6

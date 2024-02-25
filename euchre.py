@@ -63,6 +63,8 @@ def reset_players(players):
 def create_tournament(num_players=12, num_games=10, names=[]):
     if not names:
         names = [f'Player{i}' for i in range(1, num_players+1)]
+    else:
+        num_players = len(names)
     
     players = [Player(name) for name in names]
     for player in players:
@@ -112,7 +114,8 @@ def create_tournament(num_players=12, num_games=10, names=[]):
 
     return output
 
-# Example usage
-tournament = create_tournament(names=[i for i in range(12)])
+if __name__ == '__main__':
+    # Example usage
+    tournament = create_tournament(names=[i for i in range(12)])
 
-print(tournament)
+    print(tournament)
