@@ -103,16 +103,16 @@ def create_tournament(num_players=12, num_games=10, names=[]):
         # After setting up the game, reset players to allow for new combinations
         reset_players(players)
 
-        print('\n')
+    output = ''
+    for i, game in enumerate(games):
+        output += f'Game {i+1}\n'
+        for table in game.tables:
+            output += f'{table}\n'
 
-    return games
+
+    return output
 
 # Example usage
 tournament = create_tournament(names=[i for i in range(12)])
 
-i=1
-for game in tournament:
-    print(f'Game {i}')
-    i += 1
-    for table in game.tables:
-        print(table)
+print(tournament)
