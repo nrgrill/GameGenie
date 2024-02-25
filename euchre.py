@@ -40,6 +40,9 @@ class Table:
 
     def __repr__(self):
         return f'{type(self).__name__}(id={self.id}, team1={[p.name for p in self.team1]}, team2={[p.name for p in self.team2]})'
+    
+    def __str__(self):
+        return f'{self.team1[0].name} & {self.team1[1].name} vs. {self.team2[0].name} & {self.team2[1].name}'
 
 class Game:
     """
@@ -63,6 +66,8 @@ def reset_players(players):
 def create_tournament(num_players=12, num_games=10, names=[]):
     if not names:
         names = [f'Player{i}' for i in range(1, num_players+1)]
+    else:
+        num_players = len(names)
     
     players = [Player(name) for name in names]
     for player in players:
@@ -103,16 +108,17 @@ def create_tournament(num_players=12, num_games=10, names=[]):
         # After setting up the game, reset players to allow for new combinations
         reset_players(players)
 
-        print('\n')
+    output = ''
+    for i, game in enumerate(games):
+        output += f'Game {i+1}\n'
+        for table in game.tables:
+            output += f'{table}\n'
 
-    return games
 
-# Example usage
-tournament = create_tournament(names=[i for i in range(12)])
+    return output
 
-i=1
-for game in tournament:
-    print(f'Game {i}')
-    i += 1
-    for table in game.tables:
-        print(table)
+if __name__ == '__main__':
+    # Example usage
+    tournament = create_tournament(names=[i for i in range(12)])
+
+    print(tournament)

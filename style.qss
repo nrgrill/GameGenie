@@ -18,7 +18,7 @@ QTabBar::tab {
 /* Style for the current tab in the tab widget */
 QTabBar::tab:selected {
     background-color: #fff;
-    border-bottom-color: #9ceb6c;
+    border-bottom-color: #fff;
 }
 
 /* Style for pages in the tab widget */
@@ -30,14 +30,13 @@ QTabWidget::pane {
 
 /* Style for labels */
 QLabel {
-    background-color: #9ceb6c;
     font-size: 18px;
     color: #333;
 }
 
 /* Style for buttons */
 QPushButton {
-    background-color: #4caf50;
+    background-color: #c82020;
     color: #fff;
     padding: 10px;
     border: none;
@@ -46,15 +45,12 @@ QPushButton {
 
 /* Style for buttons when hovered */
 QPushButton:hover {
-    background-color: #45a049;
+    background-color: #8a1717;
 }
 
 /* Style for buttons when pressed */
 QPushButton:pressed {
-    background-color: #349934;
+    background-color: #560e0e;
 }
 
-/* Apply a subtle shadow to the buttons */
-QPushButton {
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-}
+
