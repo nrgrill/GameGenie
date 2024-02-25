@@ -1,9 +1,6 @@
 from openpyxl import Workbook, load_workbook
 
-wb = load_workbook(filename='GameGenie/Hearts.xlsx')
-ws = wb["Sheet1"]
-
-def Hearts(top, bottom, left, right, mode, target_value):
+def Hearts_function(top, bottom, left, right, mode, target_value):
     print(top)
     print(bottom)
     print(left)
@@ -19,13 +16,15 @@ def Hearts(top, bottom, left, right, mode, target_value):
     while(True):
         current_pattern = passing[rounds % len(passing)]
 
-        input("Press enter to continue...")
+        wb = load_workbook(filename='GameGenie/Hearts.xlsx')
+        ws = wb["Sheet1"]
         #Showing Passing Order
-        print(current_pattern)
-
+        print(current_pattern)#i want this to be on page 2 in info box
+        input("Press enter to continue...") #I want this to become a button you press on page 2
         #Rounds
-        print(rounds)
-
+        print(rounds)#I want this to be on page 2 in info box
+        #please import the chart to the pyside 2nd page so It can be edited
+        wb.save('GameGenie/Hearts.xlsx')
         temp_score = f"A{rounds}"
         top_points += int(ws[temp_score].value)
         temp_score = f"B{rounds}"
@@ -36,10 +35,10 @@ def Hearts(top, bottom, left, right, mode, target_value):
         left_points += int(ws[temp_score].value)
 
         #Showing total scores
-        print(top_points)
-        print(bottom_points)
-        print(left_points)
-        print(right_points)
+        print(top_points) #I want This to display in a 1*4 chart in position 1
+        print(bottom_points) #I want this to display in the same chart at possition 2
+        print(left_points)#I want this to display in the same chart at possition 3
+        print(right_points)#I want this to display in the same chart at possition 4
 
         if mode:
             if (top_points >=target_value and bottom_points >=target_value and left_points >=target_value and right_points >=target_value):
@@ -48,5 +47,6 @@ def Hearts(top, bottom, left, right, mode, target_value):
             if (rounds > target_value):
                 break
         rounds += 1
-Hearts("eli", "alex", "Grilliot", "Right",True, 10)
-wb.save('GameGenie/Hearts.xlsx')
+    
+
+Hearts_function("eli", "alex", "Grilliot", "Tom",True, 10)
