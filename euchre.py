@@ -40,6 +40,9 @@ class Table:
 
     def __repr__(self):
         return f'{type(self).__name__}(id={self.id}, team1={[p.name for p in self.team1]}, team2={[p.name for p in self.team2]})'
+    
+    def __str__(self):
+        return f'{self.team1[0].name} & {self.team1[1].name} vs. {self.team2[0].name} & {self.team2[1].name}'
 
 class Game:
     """

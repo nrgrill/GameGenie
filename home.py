@@ -1,6 +1,7 @@
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QTabWidget, QPushButton, QTableWidget, QTableWidgetItem
 from PySide6.QtCore import Qt, QFile, QTextStream
+from PySide6.QtGui import QPixmap
 from euchre import create_tournament
 
 passing = ["Center", "Left", "Right"]
@@ -109,9 +110,20 @@ class MainWindow(QMainWindow):
         self.resize(default_width, default_height)
 
     def setup_home(self):
-        label = QLabel("GameGenie")
         layout = QVBoxLayout(self.home)
-        layout.addWidget(label)
+        
+        # Load the image
+        pixmap = QPixmap("GameGenie\genie_logo.png")  # Replace "path_to_your_image_file.jpg" with the actual path to your image file
+        if not pixmap.isNull():  # Check if the image loaded successfully
+            # Create a QLabel to display the image
+            image_label = QLabel()
+            image_label.setPixmap(pixmap)
+            layout.addWidget(image_label)
+        else:
+            # If the image failed to load, display an error message
+            error_label = QLabel("Failed to load image.")
+            layout.addWidget(error_label)
+
         button = QPushButton("Start Playing")
         button.clicked.connect(lambda: self.tab_widget.setCurrentIndex(3))
         layout.addWidget(button)
@@ -171,7 +183,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
 
-    style_file = QFile("style.qss")
+    style_file = QFile("GameGenie/style.qss")
     if style_file.open(QFile.ReadOnly | QFile.Text):
         stream = QTextStream(style_file)
         app.setStyleSheet(stream.readAll())
