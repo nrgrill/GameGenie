@@ -19,10 +19,10 @@ def Hearts(top, bottom, left, right, mode, target_value):
     while(True):
         current_pattern = passing[rounds % len(passing)]
 
-        input("Press enter to continue...")
+        
         #Showing Passing Order
         print(current_pattern)
-
+        input("Press enter to continue...")
         #Rounds
         print(rounds)
 
@@ -48,5 +48,5 @@ def Hearts(top, bottom, left, right, mode, target_value):
             if (rounds > target_value):
                 break
         rounds += 1
-Hearts("eli", "alex", "Grilliot", "Right",True, 10)
+Hearts("eli", "alex", "Grilliot", "Tom",True, 10)
 wb.save('GameGenie/Hearts.xlsx')

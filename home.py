@@ -1,42 +1,57 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QPushButton, QWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QTabWidget, QPushButton
 from PySide6.QtCore import Qt
+from PySide6.QtCore import QFile, QTextStream
 
-class HomePage(QMainWindow):
+class MainWindow(QMainWindow):
     def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Home Page")
+        super(MainWindow, self).__init__()
         
-        # Create central widget and layout
-        central_widget = QWidget()
-        self.setCentralWidget(central_widget)
-        layout = QVBoxLayout()
-        central_widget.setLayout(layout)
+        self.central_widget = QWidget(self)
+        self.setCentralWidget(self.central_widget)
+
+        self.tab_widget = QTabWidget(self.central_widget)
+
+        self.page1 = QWidget()
+        self.setup_page1()
+
+        self.page2 = QWidget()
+        self.setup_page2()
         
-        # Add a label
-        label = QLabel("Welcome to the Application")
-        label.setAlignment(Qt.AlignCenter)
+        self.tab_widget.addTab(self.page1, "Page 1")
+        self.tab_widget.addTab(self.page2, "Page 2")
+
+        self.layout = QVBoxLayout(self.central_widget)
+        self.layout.addWidget(self.tab_widget)
+        
+    def setup_page1(self):
+        label = QLabel("Content of Page 1")
+        button = QPushButton("Go to Page 2")
+        button.clicked.connect(lambda: self.tab_widget.setCurrentIndex(1))
+
+        layout = QVBoxLayout(self.page1)
         layout.addWidget(label)
-        
-        # Add buttons
-        button1 = QPushButton("Button 1")
-        button1.clicked.connect(self.button1_clicked)
-        layout.addWidget(button1)
-        
-        button2 = QPushButton("Button 2")
-        button2.clicked.connect(self.button2_clicked)
-        layout.addWidget(button2)
-        
-    def button1_clicked(self):
-        print("Button 1 clicked")
-        # Add functionality for Button 1
-        
-    def button2_clicked(self):
-        print("Button 2 clicked")
-        # Add functionality for Button 2
+        layout.addWidget(button)
+
+    def setup_page2(self):
+        label = QLabel("Content of Page 2")
+        button = QPushButton("Go to Page 1")
+        button.clicked.connect(lambda: self.tab_widget.setCurrentIndex(0))
+
+        layout = QVBoxLayout(self.page2)
+        layout.addWidget(label)
+        layout.addWidget(button)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = HomePage()
+    window = MainWindow()
+
+    # Load and apply the style from style.qss
+    style_file = QFile("GameGenie\style.qss")
+    if style_file.open(QFile.ReadOnly | QFile.Text):
+        stream = QTextStream(style_file)
+        app.setStyleSheet(stream.readAll())
+        style_file.close()
+
     window.show()
-    sys.exit(app.exec())
+    sys.exit(app.exec_())
