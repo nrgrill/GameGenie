@@ -1,8 +1,10 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QTabWidget, QPushButton, QTableWidget, QTableWidgetItem
+from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QTabWidget, QPushButton, QTableWidget, QTableWidgetItem, QGraphicsPixmapItem
 from PySide6.QtCore import Qt, QFile, QTextStream
+from PySide6.QtGui import QImage
+from euchre import create_tournament
 
-#See this thing creates the table silly
+# See this thing creates the table silly
 class MyTable(QTableWidget):
     def __init__(self, data, result_labels):
         super().__init__()
@@ -16,7 +18,7 @@ class MyTable(QTableWidget):
                 self.setItem(i, j, item_widget)
         self.itemChanged.connect(self.update_totals)
 
-    #See this thing adds the stuff from the table to the total thing so you can see the total on the app of course on god
+    # See this thing adds the stuff from the table to the total thing so you can see the total on the app of course on god
     def update_totals(self, item):
         total = 0
         column_index = item.column()
@@ -27,11 +29,11 @@ class MyTable(QTableWidget):
                 pass
         self.result_labels[column_index].setText(f"Player {column_index + 1} Score: {total}")
 
-    #Does what it says obviously
+    # Does what it says obviously
     def add_row_button_clicked(self):
         current_row_count = self.rowCount()
         self.insertRow(current_row_count)
-        #Creates the array thang
+        # Creates the array thang
         for j in range(self.columnCount()):
             item_widget = QTableWidgetItem("0")
             item_widget.setFlags(item_widget.flags() | Qt.ItemFlag.ItemIsEditable)
@@ -49,7 +51,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.central_widget)
         self.tab_widget = QTabWidget(self.central_widget)
 
-        #this thing like, Uh, It adds the page ya that is what it does
+        # this thing like, Uh, It adds the page ya that is what it does
         self.home = QWidget()
         self.setup_home()
         self.euchre = QWidget()
@@ -59,7 +61,7 @@ class MainWindow(QMainWindow):
         self.list_of_games = QWidget()
         self.setup_list_of_games()
 
-        #Adds the tabs to the thing i think orsomethin
+        # Adds the tabs to the thing i think orsomethin
         self.tab_widget.addTab(self.home, "Home")
         self.tab_widget.addTab(self.euchre, "Euchre")
         self.tab_widget.addTab(self.Hearts, "Hearts")
@@ -68,26 +70,28 @@ class MainWindow(QMainWindow):
         self.layout = QVBoxLayout(self.central_widget)
         self.layout.addWidget(self.tab_widget)
 
-        #How to change thy app size ya dingy
+        # How to change thy app size ya dingy
         default_width = 800
         default_height = 600
         self.resize(default_width, default_height)
 
     def setup_home(self):
-        label = QLabel("CUM")
+        label = QLabel("GameGenie")
+        #image = QImage.load([, format=None])
         layout = QVBoxLayout(self.home)
         layout.addWidget(label)
+        #layout.addWidget(image)
         button = QPushButton("Start Playing")
         button.clicked.connect(lambda: self.tab_widget.setCurrentIndex(3))
         layout.addWidget(button)
 
-    #This is where the dumbys will format their tab
+    # Euchre Tab
     def setup_euchre(self):
         label = QLabel("Content of Page 1")
         layout = QVBoxLayout(self.euchre)
         layout.addWidget(label)
 
-    #Made this with my dick and balls
+    # Hearts tab
     def setup_hearts(self):
         data = [[0, 0, 0, 0]]
         result_labels = [QLabel(f"Player {i + 1} Score: 0") for i in range(4)]
@@ -115,12 +119,12 @@ class MainWindow(QMainWindow):
         layout.addWidget(button1)
 
 
-#Runs the thing or something idfk
+# Runs the thing or something idfk
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
-    #imports the style sheet for the colors CUH
-    style_file = QFile("GameGenie\style.qss")
+    # imports the style sheet for the colors CUH
+    style_file = QFile("GameGenie/style.qss")
     if style_file.open(QFile.ReadOnly | QFile.Text):
         stream = QTextStream(style_file)
         app.setStyleSheet(stream.readAll())
