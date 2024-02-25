@@ -25,7 +25,7 @@ class MyTable(QTableWidget):
                 total += int(self.item(i, column_index).text())
             except ValueError:
                 pass
-        self.result_labels[column_index].setText(f"player {column_index + 1} Score: {total}")
+        self.result_labels[column_index].setText(f"Player {column_index + 1} Score: {total}")
 
     #Does what it says obviously
     def add_row_button_clicked(self):
@@ -90,7 +90,7 @@ class MainWindow(QMainWindow):
     #Made this with my dick and balls
     def setup_hearts(self):
         data = [[0, 0, 0, 0]]
-        result_labels = [QLabel(f"Total for Column {i + 1}: 0") for i in range(4)]
+        result_labels = [QLabel(f"Player {i + 1} Score: 0") for i in range(4)]
         table = MyTable(data, result_labels)
 
         layout = QVBoxLayout(self.Hearts)
