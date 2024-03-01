@@ -106,7 +106,7 @@ def create_tournament(num_players=12, num_games=10, names=[]):
 
             
         # After setting up the game, reset players to allow for new combinations
-        reset_players(players)
+        # reset_players(players)
 
     output = ''
     for i, game in enumerate(games):
@@ -114,11 +114,57 @@ def create_tournament(num_players=12, num_games=10, names=[]):
         for table in game.tables:
             output += f'{table}\n'
 
+    for player in players:
+        print(player)
 
     return output
 
+def test():
+    names=[i for i in range(12)]
+    num_players = 12
+    num_games = 10
+
+    players = [Player(name) for name in names]
+    for player in players:
+        player.initialize(players)
+
+    ##############################################
+    untabled_players = players.copy()
+    games = [Game(tables=[Table(id=i) for i in range(1, (num_players//4)+1)], untabled_players=untabled_players, id=i) for i in range(num_games)]
+
+    for table in games[0].tables:
+        current_players = []
+        for _ in range(4):
+            p = choice(games[0].untabled_players)
+            current_players.append(p)
+            games[0].untabled_players.remove(p)
+
+        table.team1 = [current_players[0], current_players[1]]
+        table.team2 = [current_players[2], current_players[3]]
+
+        current_players[0].remove_partner(current_players[1])
+        current_players[0].remove_opponents([current_players[1], current_players[2]])
+
+        current_players[1].remove_partner(current_players[0])
+        current_players[1].remove_opponents([current_players[1], current_players[2]])
+
+        current_players[2].remove_partner(current_players[3])
+        current_players[2].remove_opponents([current_players[0], current_players[1]])
+
+        current_players[3].remove_partner(current_players[2])
+        current_players[3].remove_opponents([current_players[0], current_players[1]])
+
+    for player in players:
+        print(player)
+        print(f"Partners: {player.partners}")
+        print(f"Opponents: {player.opponents}")
+
+    print(games[0])
+
+
 if __name__ == '__main__':
     # Example usage
-    tournament = create_tournament(names=[i for i in range(12)])
+    # tournament = create_tournament(names=[i for i in range(12)])
 
-    print(tournament)
+    # print(tournament)
+    test()
